@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zak Dalal — Docusign AE Candidate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@300;400;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ds-navy: #0F2F5F;
+    --ds-navy-dark: #0A1E3F;
+    --ds-navy-mid: #1B3F70;
+    --ds-blue: #1B5299;
+    --ds-blue-light: #E8EFF8;
+    --ds-gold: #F5A623;
+    --ds-gold-dark: #D4891A;
+    --ds-green: #2E7D32;
+    --ds-green-light: #E8F5E9;
+    --ds-red: #C62828;
+    --ds-gray: #F5F5F0;
+    --ds-gray-mid: #E8E8E2;
+    --ds-gray-dark: #8A8A82;
+    --ds-text: #1A1A1A;
+    --ds-text-mid: #4A4A44;
+    --ds-white: #FFFFFF;
+    --ds-border: #D8D8D0;
+    --ds-sidebar: #F0EEE8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--ds-gray);
+    color: var(--ds-text);
+    min-height: 100vh;
+  }
+
+  /* TOP BAR - Docusign app header */
+  .app-bar {
+    background: var(--ds-navy);
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+
+  .app-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .ds-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: white;
+    letter-spacing: -0.02em;
+  }
+
+  .ds-logo-mark {
+    width: 28px;
+    height: 28px;
+    background: var(--ds-gold);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ds-navy);
+  }
+
+  .app-bar-nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .app-bar-nav a {
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .app-bar-nav a:hover, .app-bar-nav a.active {
+    background: rgba(255,255,255,0.12);
+    color: white;
+  }
+
+  .app-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-sign {
+    background: var(--ds-gold);
+    color: var(--ds-navy);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  .btn-sign:hover { background: var(--ds-gold-dark); transform: translateY(-1px); }
+
+  .avatar {
+    width: 30px; height: 30px;
+    background: var(--ds-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+  }
+
+  /* ENVELOPE HEADER BREADCRUMB */
+  .envelope-breadcrumb {
+    background: white;
+    border-bottom: 1px solid var(--ds-border);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--ds-gray-dark);
+  }
+
+  .envelope-breadcrumb span { color: var(--ds-blue); cursor: pointer; }
+  .envelope-breadcrumb span:hover { text-decoration: underline; }
+  .crumb-sep { color: var(--ds-gray-dark); }
+
+  /* MAIN LAYOUT */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: calc(100vh - 52px - 37px);
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--ds-sidebar);
+    border-right: 1px solid var(--ds-border);
+    padding: 0;
+    position: sticky;
+    top: 89px;
+    height: calc(100vh - 89px);
+    overflow-y: auto;
+  }
+
+  .sidebar-section {
+    padding: 16px;
+    border-bottom: 1px solid var(--ds-border);
+  }
+
+  .sidebar-section-title {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ds-gray-dark);
+    margin-bottom: 12px;
+  }
+
+  .envelope-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-dot.sent { background: var(--ds-gold); }
+  .status-dot.viewed { background: var(--ds-blue); }
+  .status-dot.signed { background: var(--ds-green); }
+  .status-dot.pending { background: var(--ds-gray-dark); }
+
+  .status-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ds-text-mid);
+  }
+
+  .status-date {
+    font-size: 11px;
+    color: var(--ds-gray-dark);
+    margin-left: auto;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .signer-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--ds-gray-mid);
+  }
+
+  .signer-item:last-child { border-bottom: none; }
+
+  .signer-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .signer-avatar.you { background: var(--ds-navy); color: white; }
+  .signer-avatar.them { background: var(--ds-blue-light); color: var(--ds-blue); }
+
+  .signer-info { flex: 1; min-width: 0; }
+  .signer-name { font-size: 12px; font-weight: 500; color: var(--ds-text); }
+  .signer-role { font-size: 11px; color: var(--ds-gray-dark); }
+
+  .signer-status {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  .signer-status.complete { background: var(--ds-green-light); color: var(--ds-green); }
+  .signer-status.pending { background: #FFF8E8; color: #B8860B; }
+  .signer-status.waiting { background: var(--ds-blue-light); color: var(--ds-blue); }
+
+  .doc-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-bottom: 4px;
+  }
+
+  .doc-item:hover, .doc-item.active { background: var(--ds-gray-mid); }
+
+  .doc-icon {
+    width: 28px; height: 36px;
+    background: white;
+    border: 1px solid var(--ds-border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--ds-blue);
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .doc-icon::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 0; height: 0;
+    border-left: 6px solid var(--ds-blue-light);
+    border-bottom: 6px solid transparent;
+  }
+
+  .doc-name { font-size: 12px; color: var(--ds-text); line-height: 1.3; }
+  .doc-pages { font-size: 11px; color: var(--ds-gray-dark); }
+
+  /* MAIN DOCUMENT AREA */
+  .doc-area {
+    background: var(--ds-gray);
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  /* DOCUMENT PAPER */
+  .document-paper {
+    background: white;
+    border: 1px solid var(--ds-border);
+    border-radius: 2px;
+    max-width: 800px;
+    margin: 0 auto 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeDoc 0.5s ease forwards;
+  }
+
+  @keyframes fadeDoc {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .document-paper:nth-child(2) { animation-delay: 0.1s; }
+  .document-paper:nth-child(3) { animation-delay: 0.2s; }
+  .document-paper:nth-child(4) { animation-delay: 0.3s; }
+  .document-paper:nth-child(5) { animation-delay: 0.4s; }
+
+  /* Page number watermark */
+  .page-num {
+    position: absolute;
+    bottom: 12px;
+    right: 16px;
+    font-size: 10px;
+    color: var(--ds-gray-dark);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* Document header strip */
+  .doc-header-strip {
+    background: var(--ds-navy);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .doc-title-block h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: white;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .doc-title-block .doc-subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .envelope-id {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  /* Document body */
+  .doc-body { padding: 40px; }
+
+  .doc-section { margin-bottom: 32px; }
+
+  .doc-section-heading {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ds-gray-dark);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ds-border);
+  }
+
+  .doc-para {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ds-text-mid);
+    margin-bottom: 12px;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 300;
+  }
+
+  .doc-para strong { color: var(--ds-text); font-weight: 600; }
+
+  /* Key terms table */
+  .terms-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+
+  .terms-table td {
+    padding: 10px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--ds-gray-mid);
+    vertical-align: top;
+  }
+
+  .terms-table td:first-child {
+    font-weight: 500;
+    color: var(--ds-text-mid);
+    width: 40%;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .terms-table td:last-child { color: var(--ds-text); font-family: 'Source Serif 4', serif; font-weight: 300; }
+
+  .terms-table tr:last-child td { border-bottom: none; }
+
+  /* Metric callout */
+  .metric-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--ds-border);
+    border: 1px solid var(--ds-border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .metric-cell {
+    background: white;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .metric-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ds-navy);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .metric-val .accent { color: var(--ds-gold-dark); }
+
+  .metric-label {
+    font-size: 11px;
+    color: var(--ds-gray-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Exhibit / proof item */
+  .exhibit {
+    border-left: 3px solid var(--ds-navy);
+    padding: 12px 16px;
+    background: var(--ds-blue-light);
+    margin-bottom: 12px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .exhibit-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ds-blue);
+    margin-bottom: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .exhibit-text {
+    font-size: 13px;
+    color: var(--ds-text);
+    line-height: 1.6;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 300;
+  }
+
+  .exhibit-text strong { font-weight: 600; color: var(--ds-navy); }
+
+  /* 30-60-90 plan */
+  .plan-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0;
+    margin-bottom: 2px;
+  }
+
+  .plan-day {
+    background: var(--ds-navy);
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .plan-content {
+    background: var(--ds-blue-light);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--ds-text-mid);
+    line-height: 1.6;
+    border-left: none;
+  }
+
+  .plan-content strong { color: var(--ds-navy); font-weight: 600; }
+
+  /* SIGNATURE FIELD */
+  .sig-block {
+    border: 1px solid var(--ds-border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .sig-header {
+    background: var(--ds-gray);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ds-border);
+  }
+
+  .sig-header-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ds-text-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .sig-status-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .sig-status-badge.signed { background: var(--ds-green-light); color: var(--ds-green); }
+  .sig-status-badge.pending { background: #FFF8E8; color: #B8860B; }
+
+  .sig-body { padding: 20px; }
+
+  .sig-field {
+    border: 2px dashed var(--ds-border);
+    border-radius: 4px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .sig-field:hover { border-color: var(--ds-blue); background: var(--ds-blue-light); }
+
+  .sig-field.filled {
+    border-style: solid;
+    border-color: var(--ds-green);
+    background: var(--ds-green-light);
+  }
+
+  .sig-field-label { font-size: 12px; color: var(--ds-gray-dark); }
+
+  .sig-written {
+    font-family: 'Source Serif 4', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--ds-navy);
+    letter-spacing: -0.02em;
+  }
+
+  .sig-check {
+    width: 20px; height: 20px;
+    background: var(--ds-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+  }
+
+  .sig-meta {
+    font-size: 10px;
+    color: var(--ds-gray-dark);
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex;
+    gap: 20px;
+  }
+
+  /* GOLDEN ACTION BAR at bottom */
+  .action-bar {
+    position: fixed;
+    bottom: 0; left: 280px; right: 0;
+    background: white;
+    border-top: 1px solid var(--ds-border);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 50;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+  }
+
+  .action-bar-left { font-size: 13px; color: var(--ds-text-mid); }
+  .action-bar-left strong { color: var(--ds-text); }
+
+  .action-btns { display: flex; gap: 10px; }
+
+  .btn-secondary {
+    background: white;
+    border: 1px solid var(--ds-border);
+    color: var(--ds-text-mid);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .btn-secondary:hover { border-color: var(--ds-navy); color: var(--ds-navy); }
+
+  .btn-primary {
+    background: var(--ds-gold);
+    color: var(--ds-navy);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    transition: background 0.15s, transform 0.1s;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover { background: var(--ds-gold-dark); transform: translateY(-1px); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .main-layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .action-bar { left: 0; }
+    .app-bar-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- APP BAR -->
+<div class="app-bar">
+  <div class="app-bar-left">
+    <div class="ds-logo">
+      <div class="ds-logo-mark">D</div>
+      Docusign
+    </div>
+    <nav class="app-bar-nav">
+      <a href="#">Home</a>
+      <a href="#" class="active">Manage</a>
+      <a href="#">Sign</a>
+      <a href="#">Reports</a>
+    </nav>
+  </div>
+  <div class="app-bar-right">
+    <a href="mailto:saketd86@gmail.com" class="btn-sign">Start a Conversation →</a>
+    <div class="avatar">ZD</div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="envelope-breadcrumb">
+  <span>Home</span>
+  <span class="crumb-sep">›</span>
+  <span>Manage</span>
+  <span class="crumb-sep">›</span>
+  <span>Agreements</span>
+  <span class="crumb-sep">›</span>
+  <span style="color: var(--ds-text-mid); cursor: default;">Account Executive Proposal — Zak Dalal</span>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Envelope Status</div>
+      <div class="envelope-status">
+        <div class="status-dot signed"></div>
+        <div class="status-label">Sent by Candidate</div>
+        <div class="status-date">Today</div>
+      </div>
+      <div class="envelope-status">
+        <div class="status-dot viewed"></div>
+        <div class="status-label">Viewed by Hiring Team</div>
+        <div class="status-date">—</div>
+      </div>
+      <div class="envelope-status">
+        <div class="status-dot pending"></div>
+        <div class="status-label">Awaiting Decision</div>
+        <div class="status-date">—</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Parties</div>
+
+      <div class="signer-item">
+        <div class="signer-avatar you">ZD</div>
+        <div class="signer-info">
+          <div class="signer-name">Zak Dalal</div>
+          <div class="signer-role">Candidate — Account Executive</div>
+        </div>
+        <span class="signer-status complete">Sent</span>
+      </div>
+
+      <div class="signer-item">
+        <div class="signer-avatar them">DS</div>
+        <div class="signer-info">
+          <div class="signer-name">Docusign Hiring Team</div>
+          <div class="signer-role">Commercial Sales — Toronto</div>
+        </div>
+        <span class="signer-status pending">Reviewing</span>
+      </div>
+
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Documents</div>
+
+      <div class="doc-item active">
+        <div class="doc-icon">PDF</div>
+        <div>
+          <div class="doc-name">Value Proposal</div>
+          <div class="doc-pages">This document</div>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-icon">PDF</div>
+        <div>
+          <div class="doc-name">Resume — Zak Dalal</div>
+          <div class="doc-pages">Attached on request</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Envelope Details</div>
+      <div style="font-size: 11px; color: var(--ds-gray-dark); line-height: 1.8; font-family: 'IBM Plex Mono', monospace;">
+        <div>ID: ZD-2026-AE-TOR</div>
+        <div>Sent: March 2026</div>
+        <div>Role: AE, Commercial</div>
+        <div>Territory: Canada</div>
+        <div>Status: PENDING REVIEW</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- DOCUMENT AREA -->
+  <main class="doc-area" style="padding-bottom: 80px;">
+
+    <!-- PAGE 1: COVER -->
+    <div class="document-paper">
+      <div class="doc-header-strip">
+        <div class="doc-title-block">
+          <h1>Account Executive Value Proposal</h1>
+          <div class="doc-subtitle">PREPARED FOR: DOCUSIGN COMMERCIAL SALES — TORONTO · MARCH 2026</div>
+        </div>
+        <div class="envelope-id">
+          Envelope ID<br>ZD-2026-AE-TOR<br>Page 1 of 5
+        </div>
+      </div>
+
+      <div class="doc-body">
+        <div class="doc-section">
+          <div class="doc-section-heading">Agreement Overview</div>
+          <p class="doc-para">
+            This proposal outlines the terms under which <strong>Saket (Zak) Dalal</strong> ("Candidate") commits to deliver measurable revenue growth, new logo acquisition, and territory development to <strong>Docusign, Inc.</strong> ("Company") in the role of Account Executive, Commercial, Toronto.
+          </p>
+          <p class="doc-para">
+            Zak brings 7+ years of full-cycle B2B SaaS sales experience, a proven track record of 100–110%+ quota over-achievement, and the territory-building instinct that Docusign's Commercial team needs to accelerate growth in the Canadian mid-market. This document provides the evidence.
+          </p>
+        </div>
+
+        <div class="doc-section">
+          <div class="doc-section-heading">Key Commercial Terms</div>
+          <table class="terms-table">
+            <tr><td>Candidate</td><td>Saket (Zak) Dalal — Toronto, ON</td></tr>
+            <tr><td>Target Role</td><td>Account Executive, Commercial — Docusign Canada</td></tr>
+            <tr><td>Territory</td><td>Canada — Mid-Market, Geographic Assignment</td></tr>
+            <tr><td>ARR Experience</td><td>$4M+ managed at Biiibo; $2.2M largest solo close</td></tr>
+            <tr><td>Quota Record</td><td>100–110%+ attainment across all roles</td></tr>
+            <tr><td>Pipeline Generated</td><td>50–100% self-sourced in every role held</td></tr>
+            <tr><td>Contact</td><td>saketd86@gmail.com · 250-802-9393</td></tr>
+          </table>
+        </div>
+
+        <div class="doc-section">
+          <div class="doc-section-heading">Proof of Performance</div>
+          <div class="metric-row">
+            <div class="metric-cell">
+              <div class="metric-val">$4M<span class="accent">+</span></div>
+              <div class="metric-label">ARR Managed</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-val">105<span class="accent">%+</span></div>
+              <div class="metric-label">Quota Attainment</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-val">97<span class="accent">%</span></div>
+              <div class="metric-label">Retention Rate</div>
+            </div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-cell">
+              <div class="metric-val">$2.2<span class="accent">M</span></div>
+              <div class="metric-label">Largest Solo Close</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-val">40<span class="accent">x</span></div>
+              <div class="metric-label">Account Expansion</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-val">90<span class="accent">%</span></div>
+              <div class="metric-label">ACV Growth/Account</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-num">Page 1 of 5</div>
+    </div>
+
+    <!-- PAGE 2: VALUE TO DOCUSIGN -->
+    <div class="document-paper">
+      <div class="doc-header-strip">
+        <div class="doc-title-block">
+          <h1>Section 2 — Value Delivered to Docusign</h1>
+          <div class="doc-subtitle">TERRITORY GROWTH · NEW LOGO ACQUISITION · PIPELINE GENERATION</div>
+        </div>
+        <div class="envelope-id">Envelope ID<br>ZD-2026-AE-TOR<br>Page 2 of 5</div>
+      </div>
+
+      <div class="doc-body">
+        <div class="doc-section">
+          <div class="doc-section-heading">Exhibit A — New Business Development</div>
+          <div class="exhibit">
+            <div class="exhibit-label">Exhibit A-1 · Territory Built from Zero</div>
+            <div class="exhibit-text">At App Growth Network, joined as the <strong>founding AE with zero pipeline</strong>. Built ICP frameworks, outbound sequences, and demo playbooks from scratch. Closed the first mid-market accounts and hit <strong>100%+ quota from Q1</strong> — exactly the self-starting capability Docusign needs to grow the Canadian commercial territory.</div>
+          </div>
+          <div class="exhibit">
+            <div class="exhibit-label">Exhibit A-2 · $200K Cold Close — Bumble</div>
+            <div class="exhibit-text">No existing relationship. Built a targeted multi-touch outreach sequence, identified the right executive stakeholder, and <strong>closed a $200K agreement</strong> through value-led selling. Proof of the outbound hunter mindset that generates pipeline independently of inbound volume.</div>
+          </div>
+          <div class="exhibit">
+            <div class="exhibit-label">Exhibit A-3 · 50%+ Self-Sourced Pipeline</div>
+            <div class="exhibit-text">Across every role, consistently generated <strong>50–100% of personal pipeline independently</strong> through cold outreach, phone, email, social selling, and trade show networking — while simultaneously managing and growing an existing book of accounts.</div>
+          </div>
+        </div>
+
+        <div class="doc-section">
+          <div class="doc-section-heading">Exhibit B — Complex Deal Execution</div>
+          <div class="exhibit">
+            <div class="exhibit-label">Exhibit B-1 · $2.2M Enterprise Close — Largest in Company History</div>
+            <div class="exhibit-text">Self-sourced through cold outreach. Built a tailored competitive analysis. Ran a <strong>2-month multi-stakeholder cycle</strong> with C-suite and finance decision-makers at a 500+ person organization. <strong>Won Best Closer Award 2017 and 2018.</strong> This is the complex deal management Docusign's enterprise-adjacent commercial accounts demand.</div>
+          </div>
+          <div class="exhibit">
+            <div class="exhibit-label">Exhibit B-2 · 40-Location Enterprise Rollout in 6 Months</div>
+            <div class="exhibit-text">Closed a pilot account and grew it into a <strong>40-location national deployment within six months</strong> — managing multiple stakeholders, developing and negotiating enterprise-level proposals, and driving adoption and usage across the full account. This is Docusign's IAM upsell motion in practice.</div>
+          </div>
+        </div>
+      </div>
+      <div class="page-num">Page 2 of 5</div>
+    </div>
+
+    <!-- PAGE 3: DOCUSIGN ALIGNMENT -->
+    <div class="document-paper">
+      <div class="doc-header-strip">
+        <div class="doc-title-block">
+          <h1>Section 3 — Why Docusign, Why Now</h1>
+          <div class="doc-subtitle">PRODUCT ALIGNMENT · MARKET CONTEXT · CANDIDATE FIT</div>
+        </div>
+        <div class="envelope-id">Envelope ID<br>ZD-2026-AE-TOR<br>Page 3 of 5</div>
+      </div>
+
+      <div class="doc-body">
+        <div class="doc-section">
+          <div class="doc-section-heading">Statement of Intent</div>
+          <p class="doc-para">
+            Docusign is not just the category leader in e-signature — it's building the <strong>intelligence layer on top of agreements themselves</strong>. Navigator, Iris, Maestro, and CLM are not incremental product updates. They represent a platform shift that creates an entirely new commercial conversation with every existing and prospective customer.
+          </p>
+          <p class="doc-para">
+            That platform shift is exactly what I want to sell. The IAM story — helping businesses unlock the data trapped inside their agreements and automate workflows they didn't even know were slowing them down — is a genuinely compelling value proposition. It's consultative, complex, and multi-stakeholder. That's my native environment.
+          </p>
+          <p class="doc-para">
+            Docusign is trusted by <strong>95% of Fortune 500 companies</strong> and serves 1.7 million customers. The brand opens doors. The product delivers. My job is to make sure the Canadian mid-market territory realizes its full potential — and I have the pipeline discipline, deal execution track record, and self-starting energy to do exactly that.
+          </p>
+        </div>
+
+        <div class="doc-section">
+          <div class="doc-section-heading">Platform Alignment</div>
+          <table class="terms-table">
+            <tr><td>eSignature</td><td>7 years of selling SaaS workflow solutions to mid-market and enterprise buyers — the same motion, different product name.</td></tr>
+            <tr><td>CLM / IAM</td><td>Experience with multi-product upsell into existing accounts — grew ACV 90% per account by expanding into new use cases.</td></tr>
+            <tr><td>Salesforce Integration</td><td>Native Salesforce user. Clean pipeline hygiene. Accurate forecasting. Proficient across Docs, Slides, Sheets, Drive.</td></tr>
+            <tr><td>Partner Ecosystem</td><td>Managed partner and channel relationships at Biiibo — comfortable with PAM collaboration and ecosystem-sourced deals.</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="page-num">Page 3 of 5</div>
+    </div>
+
+    <!-- PAGE 4: 30-60-90 DAY PLAN -->
+    <div class="document-paper">
+      <div class="doc-header-strip">
+        <div class="doc-title-block">
+          <h1>Section 4 — 30 / 60 / 90 Day Commitment</h1>
+          <div class="doc-subtitle">TERRITORY RAMP · PIPELINE BUILD · REVENUE DELIVERY</div>
+        </div>
+        <div class="envelope-id">Envelope ID<br>ZD-2026-AE-TOR<br>Page 4 of 5</div>
+      </div>
+
+      <div class="doc-body">
+        <div class="doc-section">
+          <div class="doc-section-heading">Execution Plan — Days 1 Through 90</div>
+
+          <div class="plan-row">
+            <div class="plan-day">DAY<br>1–30</div>
+            <div class="plan-content"><strong>Ramp & Build.</strong> Complete all product certifications and onboarding. Shadow top AEs on active deals. Map the assigned territory — identify top 50 accounts by revenue potential and buying readiness. Build initial outbound sequences targeting priority ICP accounts in the Canadian mid-market. Book first discovery calls within 30 days.</div>
+          </div>
+          <div style="height: 2px;"></div>
+
+          <div class="plan-row">
+            <div class="plan-day">DAY<br>31–60</div>
+            <div class="plan-content"><strong>Pipeline & Qualify.</strong> First qualified opportunities entered in Salesforce with accurate stage data. Begin delivering product demos tailored to each prospect's use case — eSignature entry, CLM expansion, IAM platform. Engage SDRs and MDRs on coordinated outbound. Attend first partner or customer event to expand network. Target: 3x pipeline coverage of quarterly quota.</div>
+          </div>
+          <div style="height: 2px;"></div>
+
+          <div class="plan-row">
+            <div class="plan-day">DAY<br>61–90</div>
+            <div class="plan-content"><strong>Close & Expand.</strong> First new logos closed. Existing accounts identified for upsell to IAM or CLM. Accurate monthly forecast delivered to RVP. Relationships established with Solutions Consultants, CSMs, and Partner AMs for ongoing collaboration. By day 90: on-track or ahead of first-quarter revenue target with a healthy, well-documented pipeline for Q2.</div>
+          </div>
+
+        </div>
+
+        <div class="doc-section">
+          <div class="doc-section-heading">Commitments Made</div>
+          <table class="terms-table">
+            <tr><td>Pipeline Coverage</td><td>Maintain 3–4x quarterly quota in active, qualified pipeline at all times</td></tr>
+            <tr><td>Forecast Accuracy</td><td>Weekly Salesforce updates with deal stage, use case, and close date discipline</td></tr>
+            <tr><td>Self-Sourced Pipeline</td><td>Generate minimum 50% of personal pipeline independently through outbound</td></tr>
+            <tr><td>Quota Target</td><td>Top 10–20% performance — the track record is documented above</td></tr>
+            <tr><td>Collaboration</td><td>Proactive engagement with SDRs, Solutions Consultants, CSMs, and PAMs on every strategic deal</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="page-num">Page 4 of 5</div>
+    </div>
+
+    <!-- PAGE 5: SIGNATURE PAGE -->
+    <div class="document-paper">
+      <div class="doc-header-strip">
+        <div class="doc-title-block">
+          <h1>Section 5 — Signature & Next Steps</h1>
+          <div class="doc-subtitle">REVIEW · SCHEDULE · ADVANCE</div>
+        </div>
+        <div class="envelope-id">Envelope ID<br>ZD-2026-AE-TOR<br>Page 5 of 5</div>
+      </div>
+
+      <div class="doc-body">
+
+        <div class="doc-section">
+          <div class="doc-section-heading">Candidate Signature — Zak Dalal</div>
+
+          <div class="sig-block">
+            <div class="sig-header">
+              <span class="sig-header-label">Candidate — Saket (Zak) Dalal</span>
+              <span class="sig-status-badge signed">✓ Signed</span>
+            </div>
+            <div class="sig-body">
+              <div class="sig-field filled">
+                <div>
+                  <div class="sig-field-label">Signature</div>
+                  <div class="sig-written">Zak Dalal</div>
+                </div>
+                <div class="sig-check">✓</div>
+              </div>
+              <div class="sig-meta">
+                <span>Signed: March 2026</span>
+                <span>IP: Toronto, ON, Canada</span>
+                <span>saketd86@gmail.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="doc-section">
+          <div class="doc-section-heading">Docusign Hiring Team — Awaiting Review</div>
+
+          <div class="sig-block">
+            <div class="sig-header">
+              <span class="sig-header-label">Hiring Manager — Docusign Commercial Sales</span>
+              <span class="sig-status-badge pending">⏳ Pending</span>
+            </div>
+            <div class="sig-body">
+              <div class="sig-field" style="cursor: default;">
+                <div>
+                  <div class="sig-field-label" style="font-size: 13px;">Click "Schedule Interview" below to advance this agreement</div>
+                </div>
+              </div>
+              <div class="sig-meta">
+                <span>Awaiting: Interview scheduling</span>
+                <span>Role: AE, Commercial — Toronto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="doc-section">
+          <div class="doc-section-heading">Contact Information</div>
+          <table class="terms-table">
+            <tr><td>Email</td><td>saketd86@gmail.com</td></tr>
+            <tr><td>Phone</td><td>250-802-9393</td></tr>
+            <tr><td>LinkedIn</td><td>linkedin.com/in/saket-dalal-zak-account-manager</td></tr>
+            <tr><td>Location</td><td>Toronto, ON — Available for hybrid schedule (2 days/week in office)</td></tr>
+          </table>
+        </div>
+
+      </div>
+      <div class="page-num">Page 5 of 5</div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ACTION BAR -->
+<div class="action-bar">
+  <div class="action-bar-left">
+    <strong>Account Executive Value Proposal</strong> — Zak Dalal · 5 pages · Awaiting review
+  </div>
+  <div class="action-btns">
+    <a href="https://linkedin.com/in/saket-dalal-zak-account-manager" class="btn-secondary">View LinkedIn</a>
+    <a href="mailto:saketd86@gmail.com" class="btn-primary">Schedule Interview →</a>
+  </div>
+</div>
+
+</body>
+</html>
